@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=3 uid="uid://dw14hevxwji3e"]
+
+[ext_resource type="PackedScene" uid="uid://bv436qu62v1qw" path="res://assets/models/palm_tree.glb" id="1_1yytp"]
+[ext_resource type="Script" path="res://scripts/palm_tree.gd" id="2_nfh8g"]
+[ext_resource type="PackedScene" uid="uid://crgdcivt0iadt" path="res://assets/models/palm_tree_stump.glb" id="3_ub2pb"]
+[ext_resource type="AudioStream" uid="uid://bann2uyvi1ica" path="res://assets/audio/woodcutter-84949.mp3" id="4_ed7bm"]
+[ext_resource type="AudioStream" uid="uid://duprnuw0ryvvt" path="res://assets/audio/timber-tree-falling-2-40385.mp3" id="5_jyi3d"]
+
+[node name="palm_tree" type="Node3D" groups=["palm_tree", "tree"]]
+script = ExtResource("2_nfh8g")
+
+[node name="stump" parent="." instance=ExtResource("3_ub2pb")]
+
+[node name="tree" parent="." instance=ExtResource("1_1yytp")]
+
+[node name="ChopSFX" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_ed7bm")
+
+[node name="DieSFX" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_jyi3d")
+
+[editable path="stump"]
+[editable path="tree"]

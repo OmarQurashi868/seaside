@@ -1,0 +1,80 @@
+[gd_scene load_steps=13 format=3 uid="uid://cpxlibev8gjnk"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_cowd1"]
+[ext_resource type="PackedScene" uid="uid://cbta1asymkv8h" path="res://assets/models/test_island.glb" id="1_ygas6"]
+[ext_resource type="PackedScene" uid="uid://b45upwuk7tjlb" path="res://scenes/player.tscn" id="2_v00ul"]
+[ext_resource type="Script" path="res://scripts/WaterArea.gd" id="3_t8y8i"]
+[ext_resource type="Shader" path="res://scripts/shaders/toon_water.gdshader" id="4_hw8mu"]
+[ext_resource type="PackedScene" uid="uid://dw14hevxwji3e" path="res://scenes/palm_tree.tscn" id="5_6yocc"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_t1nsm"]
+
+[sub_resource type="Sky" id="Sky_tih7w"]
+sky_material = SubResource("ProceduralSkyMaterial_t1nsm")
+
+[sub_resource type="Environment" id="Environment_papr0"]
+background_mode = 2
+sky = SubResource("Sky_tih7w")
+ambient_light_source = 3
+ambient_light_color = Color(0.976471, 0.976471, 0.976471, 1)
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0141
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ism88"]
+render_priority = 0
+shader = ExtResource("4_hw8mu")
+shader_parameter/WATER_COL = Color(0.04, 0.38, 0.88, 1)
+shader_parameter/WATER2_COL = Color(0.04, 0.35, 0.78, 1)
+shader_parameter/FOAM_COL = Color(0.8125, 0.9609, 0.9648, 1)
+shader_parameter/distortion_speed = 2.0
+shader_parameter/tile = Vector2(10, 10)
+shader_parameter/height = 2.0
+shader_parameter/wave_size = Vector2(2, 2)
+shader_parameter/wave_speed = 1.5
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_sionk"]
+material = SubResource("ShaderMaterial_ism88")
+size = Vector2(100, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_33vvg"]
+size = Vector3(100, 10, 100)
+
+[node name="Game" type="Node3D"]
+script = ExtResource("1_cowd1")
+
+[node name="test_island" parent="." instance=ExtResource("1_ygas6")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="test_island2" parent="." instance=ExtResource("1_ygas6")]
+transform = Transform3D(-1.77904, 0, 0.913792, 0, 2, 0, -0.913792, 0, -1.77904, -26.4277, 0, 28.6228)
+
+[node name="Player" parent="." groups=["players"] instance=ExtResource("2_v00ul")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.53483, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_papr0")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.100726, -0.601146, 0.792766, -0.0757703, 0.799139, 0.596351, -0.992025, 0, -0.126043, 0, 14.7274, 0)
+
+[node name="Water" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_sionk")
+
+[node name="WaterArea" type="Area3D" parent="Water"]
+script = ExtResource("3_t8y8i")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Water/WaterArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0)
+shape = SubResource("BoxShape3D_33vvg")
+
+[node name="palm_tree" parent="." instance=ExtResource("5_6yocc")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -3.248, 0.88807, 0)
+
+[node name="palm_tree2" parent="." instance=ExtResource("5_6yocc")]
+transform = Transform3D(0.3, 0, 0, 0, 0.299236, 0.021397, 0, -0.021397, 0.299236, 2.7234, 1.2395, -2.48204)
+
+[node name="palm_tree3" parent="." instance=ExtResource("5_6yocc")]
+transform = Transform3D(0.3, 0, 0, 0, 0.299236, 0.021397, 0, -0.021397, 0.299236, 4.47685, 0.964133, 3.10873)
+
+[connection signal="body_entered" from="Water/WaterArea" to="Water/WaterArea" method="_on_body_entered"]
+[connection signal="body_exited" from="Water/WaterArea" to="Water/WaterArea" method="_on_body_exited"]
