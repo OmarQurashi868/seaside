@@ -18,8 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 Debug="*res://scenes/debug.tscn"
-Bus="*res://scripts/bus.gd"
-Lobby="*res://scripts/lobby.gd"
+Bus="*res://scripts/autoloads/bus.gd"
+Lobby="*res://scripts/autoloads/lobby.gd"
 
 [input]
 

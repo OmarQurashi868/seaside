@@ -1,23 +1,15 @@
 extends Area3D
 
-#var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
-var floaters = []
-
-
-func _physics_process(delta):
-	for floater in floaters:
-		floater.velocity.y += gravity * delta * (0 - floater.position.y + 0.5)
-
 
 func _on_body_entered(body):
-	if body.is_in_group("players"):
-		body = body as Player
+	if body.has_method("on_water_entered"):
 		body.on_water_entered()
-		floaters.append(body)
+	if body.owner.get_parent().has_method("on_water_entered"):
+		body.owner.get_parent().on_water_entered()
 
 
 func _on_body_exited(body):
-	if body.is_in_group("players"):
-		body = body as Player
+	if body.has_method("on_water_exited"):
 		body.on_water_exited()
-		floaters.erase(body)
+	if body.owner.get_parent().has_method("on_water_exited"):
+		body.owner.get_parent().on_water_exited()

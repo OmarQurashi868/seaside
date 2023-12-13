@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cte6h68g2lc2n"]
+
+[ext_resource type="Script" path="res://scripts/simple_boat.gd" id="1_3eeqh"]
+[ext_resource type="PackedScene" uid="uid://5noxxr6201g3" path="res://assets/models/simple_boat.glb" id="1_11vkx"]
+[ext_resource type="AudioStream" uid="uid://du3k5u878lucs" path="res://assets/audio/splash-by-blaukreuz-6261.mp3" id="3_mw6fx"]
+
+[node name="SimpleBoat" type="Node3D" node_paths=PackedStringArray("body")]
+script = ExtResource("1_3eeqh")
+body = NodePath("simple_boat/Plane")
+
+[node name="simple_boat" parent="." instance=ExtResource("1_11vkx")]
+
+[node name="SFX" type="Node3D" parent="."]
+
+[node name="WaterSplash" type="AudioStreamPlayer3D" parent="SFX"]
+stream = ExtResource("3_mw6fx")
+volume_db = -2.025
+
+[editable path="simple_boat"]

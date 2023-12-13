@@ -1,11 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://cpxlibev8gjnk"]
+[gd_scene load_steps=15 format=3 uid="uid://cpxlibev8gjnk"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_cowd1"]
 [ext_resource type="PackedScene" uid="uid://cbta1asymkv8h" path="res://assets/models/test_island.glb" id="1_ygas6"]
 [ext_resource type="PackedScene" uid="uid://b45upwuk7tjlb" path="res://scenes/player.tscn" id="2_v00ul"]
 [ext_resource type="Script" path="res://scripts/WaterArea.gd" id="3_t8y8i"]
 [ext_resource type="Shader" path="res://scripts/shaders/toon_water.gdshader" id="4_hw8mu"]
-[ext_resource type="PackedScene" uid="uid://dw14hevxwji3e" path="res://scenes/palm_tree.tscn" id="5_6yocc"]
+[ext_resource type="PackedScene" uid="uid://dw14hevxwji3e" path="res://scenes/resources/palm_tree.tscn" id="5_6yocc"]
+[ext_resource type="AudioStream" uid="uid://c50wa0xv7x6b5" path="res://assets/audio/gentle-ocean-waves-birdsong-and-gull-7109.mp3" id="7_iwji3"]
+[ext_resource type="PackedScene" uid="uid://cte6h68g2lc2n" path="res://scenes/boats/simple_boat.tscn" id="8_jknxt"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_t1nsm"]
 
@@ -75,6 +77,16 @@ transform = Transform3D(0.3, 0, 0, 0, 0.299236, 0.021397, 0, -0.021397, 0.299236
 
 [node name="palm_tree3" parent="." instance=ExtResource("5_6yocc")]
 transform = Transform3D(0.3, 0, 0, 0, 0.299236, 0.021397, 0, -0.021397, 0.299236, 4.47685, 0.964133, 3.10873)
+
+[node name="Ambience" type="Node" parent="."]
+
+[node name="Ambience" type="AudioStreamPlayer" parent="Ambience"]
+stream = ExtResource("7_iwji3")
+volume_db = -7.518
+autoplay = true
+
+[node name="SimpleBoat" parent="." instance=ExtResource("8_jknxt")]
+transform = Transform3D(0.608069, 0, -0.793884, 0, 1, 0, 0.793884, 0, 0.608069, -2.3953, 1.86917, -7.26142)
 
 [connection signal="body_entered" from="Water/WaterArea" to="Water/WaterArea" method="_on_body_entered"]
 [connection signal="body_exited" from="Water/WaterArea" to="Water/WaterArea" method="_on_body_exited"]

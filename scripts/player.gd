@@ -24,7 +24,7 @@ func _physics_process(delta):
 		velocity.y -= gravity * delta
 	
 	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and (is_on_floor() or is_in_water):
 		velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.
@@ -37,7 +37,7 @@ func _physics_process(delta):
 	
 	Debug.update_entry("depth", 0 - position.y + 0.5)
 	if is_in_water:
-		#velocity.y += gravity * delta * (0 - position.y + 0.5)
+		velocity.y += gravity * delta * (0 - global_position.y + 0.5)
 		target_speed = SPEED * WATER_SPEED_FACTOR
 		$Camera3D.fov = lerp($Camera3D.fov, 75.0, delta * 3)
 		Debug.update_entry("state", "swimming")
