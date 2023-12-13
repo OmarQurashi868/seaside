@@ -12,6 +12,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var team_id: int = 0
 var is_in_water = false
+var is_submergeed = false
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -55,6 +56,12 @@ func _physics_process(delta):
 	velocity.x = move_toward(velocity.x, direction.x * target_speed, ACCEL)
 	velocity.z = move_toward(velocity.z, direction.z * target_speed, ACCEL)
 	
+	# Check if camera is submerged
+	if $Camera3D.global_position.y < 0 and not is_submergeed:
+		on_submerged()
+	if $Camera3D.global_position.y >= 0 and is_submergeed:
+		on_ascend()
+	
 	move_and_slide()
 
 
@@ -72,10 +79,19 @@ func on_water_entered():
 	$SFX/WaterSplash.play()
 	is_in_water = true
 	Debug.update_entry("is in water", is_in_water)
+	
 
 func on_water_exited():
 	is_in_water = false
 	Debug.update_entry("is in water", is_in_water)
+
+
+func on_submerged():
+	is_submergeed = true
+	Bus.player_entered_water.emit()
+func on_ascend():
+	is_submergeed = false
+	Bus.player_exited_water.emit()
 
 
 func try_collect():

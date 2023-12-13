@@ -56,4 +56,4 @@ script = ExtResource("2_08weu")
 
 [node name="WaterSplash" type="AudioStreamPlayer3D" parent="SFX"]
 stream = ExtResource("3_kg2eg")
-volume_db = -2.025
+volume_db = -10.126

@@ -9,18 +9,28 @@
 [ext_resource type="AudioStream" uid="uid://c50wa0xv7x6b5" path="res://assets/audio/gentle-ocean-waves-birdsong-and-gull-7109.mp3" id="7_iwji3"]
 [ext_resource type="PackedScene" uid="uid://cte6h68g2lc2n" path="res://scenes/boats/simple_boat.tscn" id="8_jknxt"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_t1nsm"]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_412dv"]
+sky_top_color = Color(0.168627, 0.45098, 0.772549, 1)
+sky_horizon_color = Color(0.482353, 0.682353, 0.819608, 1)
+sky_curve = 0.121838
+sky_energy_multiplier = 1.4
+ground_bottom_color = Color(0.117647, 0.368627, 1, 1)
+ground_horizon_color = Color(0.117647, 0.345098, 0.92549, 1)
+ground_curve = 0.00554786
+sun_angle_max = 118.04
+sun_curve = 0.0549033
 
-[sub_resource type="Sky" id="Sky_tih7w"]
-sky_material = SubResource("ProceduralSkyMaterial_t1nsm")
+[sub_resource type="Sky" id="Sky_a3vdq"]
+sky_material = SubResource("ProceduralSkyMaterial_412dv")
 
 [sub_resource type="Environment" id="Environment_papr0"]
 background_mode = 2
-sky = SubResource("Sky_tih7w")
+sky = SubResource("Sky_a3vdq")
 ambient_light_source = 3
-ambient_light_color = Color(0.976471, 0.976471, 0.976471, 1)
-volumetric_fog_enabled = true
-volumetric_fog_density = 0.0141
+ambient_light_energy = 0.0
+reflected_light_source = 2
+glow_enabled = true
+volumetric_fog_density = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ism88"]
 render_priority = 0
@@ -58,6 +68,9 @@ environment = SubResource("Environment_papr0")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.100726, -0.601146, 0.792766, -0.0757703, 0.799139, 0.596351, -0.992025, 0, -0.126043, 0, 14.7274, 0)
+light_color = Color(0.878431, 0.854902, 0.690196, 1)
+light_energy = 2.514
+light_indirect_energy = 0.0
 
 [node name="Water" type="MeshInstance3D" parent="."]
 mesh = SubResource("PlaneMesh_sionk")
