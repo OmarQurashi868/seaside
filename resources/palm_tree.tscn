@@ -1,0 +1,26 @@
+[gd_scene load_steps=7 format=3 uid="uid://dw14hevxwji3e"]
+
+[ext_resource type="PackedScene" uid="uid://bv436qu62v1qw" path="res://assets/models/palm_tree.glb" id="1_1yytp"]
+[ext_resource type="Script" path="res://scripts/classes/resource_object.gd" id="2_40no8"]
+[ext_resource type="PackedScene" uid="uid://crgdcivt0iadt" path="res://assets/models/palm_tree_stump.glb" id="3_ub2pb"]
+[ext_resource type="AudioStream" uid="uid://bann2uyvi1ica" path="res://assets/audio/woodcutter-84949.mp3" id="4_ed7bm"]
+[ext_resource type="AudioStream" uid="uid://duprnuw0ryvvt" path="res://assets/audio/timber-tree-falling-2-40385.mp3" id="5_jyi3d"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_clxdw"]
+size = Vector3(2.79675, 23.155, 2.75131)
+
+[node name="palm_tree" groups=["tree"] instance=ExtResource("1_1yytp")]
+script = ExtResource("2_40no8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0727963, 11.5436, -0.0277252)
+shape = SubResource("BoxShape3D_clxdw")
+
+[node name="CollectSFX" type="AudioStreamPlayer3D" parent="." index="2"]
+stream = ExtResource("4_ed7bm")
+
+[node name="DieSFX" type="AudioStreamPlayer3D" parent="." index="3"]
+stream = ExtResource("5_jyi3d")
+
+[node name="Stump" parent="." index="4" instance=ExtResource("3_ub2pb")]
+visible = false

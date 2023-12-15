@@ -11,15 +11,28 @@ config_version=5
 [application]
 
 config/name="Seaside"
-run/main_scene="res://scenes/game.tscn"
+run/main_scene="res://game/game.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-Debug="*res://scenes/debug.tscn"
+Debug="*res://game/debug/debug.tscn"
 Bus="*res://scripts/autoloads/bus.gd"
 Lobby="*res://scripts/autoloads/lobby.gd"
+World="*res://scripts/autoloads/world.gd"
+
+[file_customization]
+
+folder_colors={
+"res://assets/": "pink",
+"res://boats/": "orange",
+"res://game/": "blue",
+"res://player/": "red",
+"res://resources/": "yellow",
+"res://scripts/": "gray",
+"res://ui/": "green"
+}
 
 [input]
 

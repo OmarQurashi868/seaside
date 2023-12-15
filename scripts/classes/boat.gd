@@ -1,22 +1,23 @@
-extends Node3D
+extends RigidBody3D
 class_name Boat
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-@export var mass: float = 10.0
-@export var body: RigidBody3D
 var is_in_water = false
+var time = 0
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	body.lock_rotation = true
-	body.mass = mass
+@onready var mesh = $Plane as MeshInstance3D
+@onready var offset = mesh.get_aabb().size.y / 2
 
+
+func _physics_process(delta):
+	time += delta
+	rotation.x = sin(time) * 0.1
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta):
+func _integrate_forces(state):
 	if is_in_water:
-		body.apply_force(Vector3(0, 10*delta, 0))
+		apply_force(Vector3(0, gravity * (global_position.y - offset), 0))
 
 
 func on_water_entered():

@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/palm_tree_stump.glb-9d433a9444401853281652b18
 
 [params]
 
-nodes/root_type=""
+nodes/root_type="Node3D"
 nodes/root_name=""
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
@@ -32,7 +32,6 @@ import_script/path=""
 _subresources={
 "nodes": {
 "PATH:Stump": {
-"generate/physics": true,
 "physics/shape_type": 3
 }
 }

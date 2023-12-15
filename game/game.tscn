@@ -1,13 +1,13 @@
 [gd_scene load_steps=15 format=3 uid="uid://cpxlibev8gjnk"]
 
-[ext_resource type="Script" path="res://scripts/game.gd" id="1_cowd1"]
-[ext_resource type="PackedScene" uid="uid://cbta1asymkv8h" path="res://assets/models/test_island.glb" id="1_ygas6"]
-[ext_resource type="PackedScene" uid="uid://b45upwuk7tjlb" path="res://scenes/player.tscn" id="2_v00ul"]
-[ext_resource type="Script" path="res://scripts/WaterArea.gd" id="3_t8y8i"]
-[ext_resource type="Shader" path="res://scripts/shaders/toon_water.gdshader" id="4_hw8mu"]
-[ext_resource type="PackedScene" uid="uid://dw14hevxwji3e" path="res://scenes/resources/palm_tree.tscn" id="5_6yocc"]
-[ext_resource type="AudioStream" uid="uid://c50wa0xv7x6b5" path="res://assets/audio/gentle-ocean-waves-birdsong-and-gull-7109.mp3" id="7_iwji3"]
-[ext_resource type="PackedScene" uid="uid://cte6h68g2lc2n" path="res://scenes/boats/simple_boat.tscn" id="8_jknxt"]
+[ext_resource type="Script" path="res://game/game.gd" id="1_krvvd"]
+[ext_resource type="PackedScene" uid="uid://cbta1asymkv8h" path="res://assets/models/test_island.glb" id="2_k51ge"]
+[ext_resource type="PackedScene" uid="uid://b45upwuk7tjlb" path="res://player/player.tscn" id="3_cnml7"]
+[ext_resource type="Shader" path="res://scripts/shaders/toon_water.gdshader" id="4_0cpmm"]
+[ext_resource type="Script" path="res://game/WaterArea.gd" id="5_fo7xh"]
+[ext_resource type="PackedScene" uid="uid://dw14hevxwji3e" path="res://resources/palm_tree.tscn" id="6_7x8cd"]
+[ext_resource type="AudioStream" uid="uid://c50wa0xv7x6b5" path="res://assets/audio/gentle-ocean-waves-birdsong-and-gull-7109.mp3" id="7_vc0qu"]
+[ext_resource type="PackedScene" uid="uid://cte6h68g2lc2n" path="res://boats/simple_boat.tscn" id="8_lq0w1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_412dv"]
 sky_top_color = Color(0.168627, 0.45098, 0.772549, 1)
@@ -34,7 +34,7 @@ volumetric_fog_density = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ism88"]
 render_priority = 0
-shader = ExtResource("4_hw8mu")
+shader = ExtResource("4_0cpmm")
 shader_parameter/WATER_COL = Color(0.04, 0.38, 0.88, 1)
 shader_parameter/WATER2_COL = Color(0.04, 0.35, 0.78, 1)
 shader_parameter/FOAM_COL = Color(0.8125, 0.9609, 0.9648, 1)
@@ -52,15 +52,15 @@ size = Vector2(100, 100)
 size = Vector3(100, 10, 100)
 
 [node name="Game" type="Node3D"]
-script = ExtResource("1_cowd1")
+script = ExtResource("1_krvvd")
 
-[node name="test_island" parent="." instance=ExtResource("1_ygas6")]
+[node name="test_island" parent="." instance=ExtResource("2_k51ge")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 
-[node name="test_island2" parent="." instance=ExtResource("1_ygas6")]
+[node name="test_island2" parent="." instance=ExtResource("2_k51ge")]
 transform = Transform3D(-1.77904, 0, 0.913792, 0, 2, 0, -0.913792, 0, -1.77904, -26.4277, 0, 28.6228)
 
-[node name="Player" parent="." groups=["players"] instance=ExtResource("2_v00ul")]
+[node name="Player" parent="." groups=["players"] instance=ExtResource("3_cnml7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.53483, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -76,30 +76,30 @@ light_indirect_energy = 0.0
 mesh = SubResource("PlaneMesh_sionk")
 
 [node name="WaterArea" type="Area3D" parent="Water"]
-script = ExtResource("3_t8y8i")
+script = ExtResource("5_fo7xh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Water/WaterArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0)
 shape = SubResource("BoxShape3D_33vvg")
 
-[node name="palm_tree" parent="." instance=ExtResource("5_6yocc")]
+[node name="palm_tree" parent="." instance=ExtResource("6_7x8cd")]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -3.248, 0.88807, 0)
 
-[node name="palm_tree2" parent="." instance=ExtResource("5_6yocc")]
+[node name="palm_tree2" parent="." instance=ExtResource("6_7x8cd")]
 transform = Transform3D(0.3, 0, 0, 0, 0.299236, 0.021397, 0, -0.021397, 0.299236, 2.7234, 1.2395, -2.48204)
 
-[node name="palm_tree3" parent="." instance=ExtResource("5_6yocc")]
+[node name="palm_tree3" parent="." instance=ExtResource("6_7x8cd")]
 transform = Transform3D(0.3, 0, 0, 0, 0.299236, 0.021397, 0, -0.021397, 0.299236, 4.47685, 0.964133, 3.10873)
 
 [node name="Ambience" type="Node" parent="."]
 
 [node name="Ambience" type="AudioStreamPlayer" parent="Ambience"]
-stream = ExtResource("7_iwji3")
+stream = ExtResource("7_vc0qu")
 volume_db = -7.518
 autoplay = true
 
-[node name="SimpleBoat" parent="." instance=ExtResource("8_jknxt")]
-transform = Transform3D(0.608069, 0, -0.793884, 0, 1, 0, 0.793884, 0, 0.608069, -2.3953, 1.86917, -7.26142)
+[node name="SimpleBoat" parent="." instance=ExtResource("8_lq0w1")]
+transform = Transform3D(0.608069, 0, -0.793884, 0, 1, 0, 0.793884, 0, 0.608069, -2.3953, 0.331726, -7.26142)
 
 [connection signal="body_entered" from="Water/WaterArea" to="Water/WaterArea" method="_on_body_entered"]
 [connection signal="body_exited" from="Water/WaterArea" to="Water/WaterArea" method="_on_body_exited"]

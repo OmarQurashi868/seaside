@@ -13,8 +13,8 @@ dest_files=["res://.godot/imported/simple_boat.glb-103d55ab19d7e5eb67c6dee84e16d
 
 [params]
 
-nodes/root_type=""
-nodes/root_name=""
+nodes/root_type="RigidBody3D"
+nodes/root_name="SimpleBoat"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 meshes/ensure_tangents=true
@@ -24,7 +24,7 @@ meshes/light_baking=1
 meshes/lightmap_texel_size=0.2
 meshes/force_disable_compression=false
 skins/use_named_skins=true
-animation/import=true
+animation/import=false
 animation/fps=30
 animation/trimming=false
 animation/remove_immutable_tracks=true
@@ -32,7 +32,6 @@ import_script/path=""
 _subresources={
 "nodes": {
 "PATH:Plane": {
-"generate/physics": true,
 "physics/body_type": 1,
 "physics/shape_type": 1
 }

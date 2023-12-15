@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://b45upwuk7tjlb"]
 
-[ext_resource type="Script" path="res://scripts/player.gd" id="1_xy2cs"]
-[ext_resource type="Script" path="res://scripts/reticle.gd" id="2_08weu"]
+[ext_resource type="Script" path="res://player/player.gd" id="1_xy2cs"]
+[ext_resource type="Script" path="res://ui/reticle.gd" id="2_08weu"]
 [ext_resource type="AudioStream" uid="uid://du3k5u878lucs" path="res://assets/audio/splash-by-blaukreuz-6261.mp3" id="3_kg2eg"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_g14t6"]

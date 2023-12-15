@@ -1,6 +1,6 @@
 extends Control
 
-@onready var debug_entry_scene = preload("res://scenes/debug_entry.tscn")
+@onready var debug_entry_scene = preload("res://game/debug/debug_entry.tscn")
 
 
 func update_entry(entry: String, value) -> void:

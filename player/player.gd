@@ -57,9 +57,9 @@ func _physics_process(delta):
 	velocity.z = move_toward(velocity.z, direction.z * target_speed, ACCEL)
 	
 	# Check if camera is submerged
-	if $Camera3D.global_position.y < 0 and not is_submergeed:
+	if $Camera3D.global_position.y < World.sea_level and not is_submergeed:
 		on_submerged()
-	if $Camera3D.global_position.y >= 0 and is_submergeed:
+	if $Camera3D.global_position.y >= World.sea_level and is_submergeed:
 		on_ascend()
 	
 	move_and_slide()
@@ -99,7 +99,7 @@ func try_collect():
 	var query = PhysicsRayQueryParameters3D.create(global_position, global_position + -transform.basis.z * 2)
 	var result = space_state.intersect_ray(query)
 	if result.has("collider"):
-		var target = result.collider.owner.get_parent()
+		var target = result.collider
 		Debug.update_entry("target", target.is_in_group("palm_tree"))
 		if target.is_in_group("tree"):
 			target.on_collect(self)
@@ -107,5 +107,5 @@ func try_collect():
 		Debug.update_entry("target", "INVALID")
 
 
-func on_wood_collected(amount: int = 1):
-	Lobby.on_wood_collected(amount, team_id)
+func on_resource_collected(resource_type: TeamData.resource_type, amount: int = 1):
+	World.on_resource_collected(resource_type ,amount, team_id)
