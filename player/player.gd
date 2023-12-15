@@ -9,6 +9,7 @@ const JUMP_VELOCITY = 4.5
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+@onready var underwater_overlay: ShaderMaterial = $Camera3D/UnderwaterOverlay.get_active_material(0)
 
 var team_id: int = 0
 var is_in_water = false
@@ -57,6 +58,7 @@ func _physics_process(delta):
 	velocity.z = move_toward(velocity.z, direction.z * target_speed, ACCEL)
 	
 	# Check if camera is submerged
+	# World.get_water_level(Vector2(global_position.x, global_position.y))
 	if $Camera3D.global_position.y < World.sea_level and not is_submergeed:
 		on_submerged()
 	if $Camera3D.global_position.y >= World.sea_level and is_submergeed:
@@ -79,8 +81,6 @@ func on_water_entered():
 	$SFX/WaterSplash.play()
 	is_in_water = true
 	Debug.update_entry("is in water", is_in_water)
-	
-
 func on_water_exited():
 	is_in_water = false
 	Debug.update_entry("is in water", is_in_water)
@@ -89,9 +89,14 @@ func on_water_exited():
 func on_submerged():
 	is_submergeed = true
 	Bus.player_entered_water.emit()
+	#underwater_overlay.set_shader_parameter("target_alpha", 0.5)
+	var tween = get_tree().create_tween()
+	tween.tween_property(underwater_overlay, "shader_parameter/target_alpha", 0.5, 0.1)
 func on_ascend():
 	is_submergeed = false
 	Bus.player_exited_water.emit()
+	var tween = get_tree().create_tween()
+	tween.tween_property(underwater_overlay, "shader_parameter/target_alpha", 0.0, 0.1)
 
 
 func try_collect():

@@ -3,6 +3,7 @@ class_name ResourceObject
 
 @export var resource_type: TeamData.resource_type
 @export var content: int = 10
+@export var collect_amount: int = 1
 @export var collect_cooldown: float = 0.5
 @export var respawn_timer: float = 10
 var is_dead = false
@@ -13,7 +14,7 @@ func on_collect(player: Player):
 		can_collect = false
 		get_tree().create_timer(collect_cooldown).timeout.connect(func(): can_collect = true)
 		$CollectSFX.play()
-		player.on_resource_collected(resource_type)
+		player.on_resource_collected(resource_type, collect_amount)
 		content -= 1
 		if content <= 0:
 			die()

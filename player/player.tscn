@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://b45upwuk7tjlb"]
+[gd_scene load_steps=10 format=3 uid="uid://b45upwuk7tjlb"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_xy2cs"]
 [ext_resource type="Script" path="res://ui/reticle.gd" id="2_08weu"]
+[ext_resource type="Shader" path="res://scripts/shaders/water.gdshader" id="2_xwnpl"]
 [ext_resource type="AudioStream" uid="uid://du3k5u878lucs" path="res://assets/audio/splash-by-blaukreuz-6261.mp3" id="3_kg2eg"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_g14t6"]
@@ -10,6 +11,15 @@
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_h1eyj"]
 radius = 0.25
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sugyl"]
+render_priority = 0
+shader = ExtResource("2_xwnpl")
+shader_parameter/target_alpha = 0.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_atefe"]
+material = SubResource("ShaderMaterial_sugyl")
+size = Vector2(4, 2)
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
 script = ExtResource("1_xy2cs")
@@ -25,6 +35,10 @@ shape = SubResource("SphereShape3D_h1eyj")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.62462, 0)
+
+[node name="UnderwaterOverlay" type="MeshInstance3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, -0.882953)
+mesh = SubResource("PlaneMesh_atefe")
 
 [node name="StateMachine" type="Node" parent="."]
 
