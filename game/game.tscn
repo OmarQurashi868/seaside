@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cpxlibev8gjnk"]
+[gd_scene load_steps=17 format=3 uid="uid://cpxlibev8gjnk"]
 
 [ext_resource type="Script" path="res://game/game.gd" id="1_krvvd"]
 [ext_resource type="PackedScene" uid="uid://cbta1asymkv8h" path="res://assets/models/test_island.glb" id="2_k51ge"]
@@ -52,6 +52,14 @@ orientation = 1
 [sub_resource type="BoxShape3D" id="BoxShape3D_33vvg"]
 size = Vector3(100, 10, 100)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j8jgn"]
+albedo_color = Color(0.8, 0, 0.337255, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_7el8h"]
+material = SubResource("StandardMaterial3D_j8jgn")
+radius = 0.125
+height = 0.25
+
 [node name="Game" type="Node3D"]
 script = ExtResource("1_krvvd")
 
@@ -70,7 +78,7 @@ environment = SubResource("Environment_papr0")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.100726, -0.601146, 0.792766, -0.0757703, 0.799139, 0.596351, -0.992025, 0, -0.126043, 0, 14.7274, 0)
 light_color = Color(0.878431, 0.854902, 0.690196, 1)
-light_energy = 2.514
+light_energy = 1.635
 light_indirect_energy = 0.0
 
 [node name="Water" type="MeshInstance3D" parent="."]
@@ -102,6 +110,10 @@ autoplay = true
 
 [node name="SimpleBoat" parent="." instance=ExtResource("8_lq0w1")]
 transform = Transform3D(0.608069, 0, -0.793884, 0, 1, 0, 0.793884, 0, 0.608069, -2.3953, 0.331726, -7.26142)
+
+[node name="Pointer" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.06335, 0)
+mesh = SubResource("SphereMesh_7el8h")
 
 [connection signal="body_entered" from="Water/WaterArea" to="Water/WaterArea" method="_on_body_entered"]
 [connection signal="body_exited" from="Water/WaterArea" to="Water/WaterArea" method="_on_body_exited"]

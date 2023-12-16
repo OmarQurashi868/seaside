@@ -9,7 +9,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_clxdw"]
 size = Vector3(2.79675, 23.155, 2.75131)
 
-[node name="palm_tree" groups=["tree"] instance=ExtResource("1_1yytp")]
+[node name="palm_tree" groups=["resource", "tree"] instance=ExtResource("1_1yytp")]
 script = ExtResource("2_40no8")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1"]

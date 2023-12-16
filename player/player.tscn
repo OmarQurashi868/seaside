@@ -1,9 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://b45upwuk7tjlb"]
+[gd_scene load_steps=14 format=3 uid="uid://b45upwuk7tjlb"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_xy2cs"]
+[ext_resource type="Script" path="res://player/input.gd" id="2_2hhbo"]
 [ext_resource type="Script" path="res://ui/reticle.gd" id="2_08weu"]
 [ext_resource type="Shader" path="res://scripts/shaders/water.gdshader" id="2_xwnpl"]
 [ext_resource type="AudioStream" uid="uid://du3k5u878lucs" path="res://assets/audio/splash-by-blaukreuz-6261.mp3" id="3_kg2eg"]
+[ext_resource type="Script" path="res://player/states/land.gd" id="3_md8bu"]
+[ext_resource type="Script" path="res://player/state_machine.gd" id="3_od8qx"]
+[ext_resource type="Script" path="res://player/states/sea.gd" id="5_3b2gj"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_g14t6"]
 
@@ -24,6 +28,22 @@ size = Vector2(4, 2)
 [node name="CharacterBody3D" type="CharacterBody3D"]
 script = ExtResource("1_xy2cs")
 
+[node name="Input" type="Node" parent="."]
+script = ExtResource("2_2hhbo")
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("3_od8qx")
+
+[node name="Land" type="Node" parent="StateMachine"]
+script = ExtResource("3_md8bu")
+
+[node name="Sea" type="Node" parent="StateMachine"]
+script = ExtResource("5_3b2gj")
+
+[node name="Driving" type="Node" parent="StateMachine"]
+
+[node name="Manning" type="Node" parent="StateMachine"]
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_g14t6")
 
@@ -39,8 +59,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.62462, 0)
 [node name="UnderwaterOverlay" type="MeshInstance3D" parent="Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, -0.882953)
 mesh = SubResource("PlaneMesh_atefe")
-
-[node name="StateMachine" type="Node" parent="."]
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3

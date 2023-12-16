@@ -2,3 +2,6 @@ extends Node
 
 signal player_entered_water
 signal player_exited_water
+
+# Debug
+signal debug_raycast_requested

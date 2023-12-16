@@ -18,7 +18,7 @@ func _physics_process(delta):
 	rotation.x = sin(time) * 0.1
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _integrate_forces(state):
+func _integrate_forces(_state):
 	var depth = World.sea_level - global_position.y + offset/2
 	if is_in_water:
 		apply_force(Vector3.UP * (gravity + gravity * depth))
