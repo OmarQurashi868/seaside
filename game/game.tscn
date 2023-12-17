@@ -66,8 +66,14 @@ script = ExtResource("1_krvvd")
 [node name="test_island" parent="." instance=ExtResource("2_k51ge")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 
+[node name="StaticBody3D" parent="test_island/Plane" index="0"]
+collision_layer = 3
+
 [node name="test_island2" parent="." instance=ExtResource("2_k51ge")]
 transform = Transform3D(-1.77904, 0, 0.913792, 0, 2, 0, -0.913792, 0, -1.77904, -26.4277, 0, 28.6228)
+
+[node name="StaticBody3D" parent="test_island2/Plane" index="0"]
+collision_layer = 3
 
 [node name="Player" parent="." groups=["players"] instance=ExtResource("3_cnml7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.53483, 0)
@@ -117,3 +123,6 @@ mesh = SubResource("SphereMesh_7el8h")
 
 [connection signal="body_entered" from="Water/WaterArea" to="Water/WaterArea" method="_on_body_entered"]
 [connection signal="body_exited" from="Water/WaterArea" to="Water/WaterArea" method="_on_body_exited"]
+
+[editable path="test_island"]
+[editable path="test_island2"]

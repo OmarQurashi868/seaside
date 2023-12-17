@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b45upwuk7tjlb"]
+[gd_scene load_steps=15 format=3 uid="uid://b45upwuk7tjlb"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_xy2cs"]
 [ext_resource type="Script" path="res://player/input.gd" id="2_2hhbo"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://player/states/land.gd" id="3_md8bu"]
 [ext_resource type="Script" path="res://player/state_machine.gd" id="3_od8qx"]
 [ext_resource type="Script" path="res://player/states/sea.gd" id="5_3b2gj"]
+[ext_resource type="Script" path="res://player/states/mounted.gd" id="6_vkw7s"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_g14t6"]
 
@@ -40,7 +41,8 @@ script = ExtResource("3_md8bu")
 [node name="Sea" type="Node" parent="StateMachine"]
 script = ExtResource("5_3b2gj")
 
-[node name="Driving" type="Node" parent="StateMachine"]
+[node name="Mounted" type="Node" parent="StateMachine"]
+script = ExtResource("6_vkw7s")
 
 [node name="Manning" type="Node" parent="StateMachine"]
 

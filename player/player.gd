@@ -12,11 +12,14 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @onready var underwater_overlay: ShaderMaterial = $Camera3D/UnderwaterOverlay.get_active_material(0)
 @onready var input: PlayerInput = $Input as PlayerInput
 @onready var state_machine: StateMachine = $StateMachine as StateMachine
+var seat: Seat
+var boat: Boat
 
 var team_id: int = 0
 var is_in_water = false
 var is_submergeed = false
 var is_sprinting = false
+var is_mounted = false
 
 
 func _physics_process(delta):
@@ -70,15 +73,25 @@ func handle_collecting():
 		try_collect()
 
 func handle_interaction():
-	pass
+	if is_mounted:
+		if input.get_interact():
+			on_eject()
+		return
+	
+	var target = shoot_ray()
+	# TODO: Update UI indicator
+	
+	if input.get_interact():
+		if target is Seat:
+			target.mount(self)
+			on_mount(target)
 #endregion
+
 
 func on_water_entered():
 	is_in_water = true
-
 func on_water_exited():
 	is_in_water = false
-
 
 func on_submerged():
 	is_submergeed = true
@@ -92,6 +105,24 @@ func on_ascend():
 	var tween = get_tree().create_tween()
 	tween.tween_property(underwater_overlay, "shader_parameter/target_alpha", 0.0, 0.1)
 
+func on_mount(req_seat: Seat):
+	is_mounted = true
+	seat = req_seat
+	boat = seat.get_parent() as Boat
+	global_position = seat.global_position
+	velocity = Vector3.ZERO
+	state_machine.change_state("Mounted")
+	Debug.update_entry("mounted", is_mounted)
+func on_eject():
+	is_mounted = false
+	seat.eject()
+	seat = null
+	state_machine.change_state("Land")
+	Debug.update_entry("mounted", is_mounted)
+
+func on_resource_collected(resource_type: TeamData.resource_type, amount: int = 1):
+	World.on_resource_collected(resource_type ,amount, team_id)
+
 
 func try_collect():
 	var target = shoot_ray()
@@ -104,13 +135,12 @@ func try_collect():
 
 func shoot_ray(length: float = 2):
 	var space_state = get_world_3d().direct_space_state
-	var query = PhysicsRayQueryParameters3D.create($Camera3D.global_position, $Camera3D.global_position + -transform.basis.z * 2)
+	var origin = $Camera3D.global_position
+	var target = $Camera3D.global_position + -transform.basis.z * length
+	var query = PhysicsRayQueryParameters3D.create(origin, target)
 	query.collide_with_areas = true
 	var result = space_state.intersect_ray(query)
 	if result.has("collider"):
 		#Bus.debug_raycast_requested.emit(result.position)
 		return result.collider
 	return null
-
-func on_resource_collected(resource_type: TeamData.resource_type, amount: int = 1):
-	World.on_resource_collected(resource_type ,amount, team_id)

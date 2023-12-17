@@ -22,6 +22,10 @@ Bus="*res://scripts/autoloads/bus.gd"
 Lobby="*res://scripts/autoloads/lobby.gd"
 World="*res://scripts/autoloads/world.gd"
 
+[display]
+
+window/size/resizable=false
+
 [file_customization]
 
 folder_colors={
