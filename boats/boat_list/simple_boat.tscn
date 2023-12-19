@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cte6h68g2lc2n"]
 
 [ext_resource type="PackedScene" uid="uid://5noxxr6201g3" path="res://assets/models/simple_boat.glb" id="1_11vkx"]
-[ext_resource type="Script" path="res://boats/simple_boat.gd" id="2_qntw0"]
+[ext_resource type="Script" path="res://boats/boat_list/simple_boat.gd" id="2_qntw0"]
 [ext_resource type="AudioStream" uid="uid://du3k5u878lucs" path="res://assets/audio/splash-by-blaukreuz-6261.mp3" id="3_mw6fx"]
 [ext_resource type="Script" path="res://boats/seat.gd" id="4_obhn6"]
 

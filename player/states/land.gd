@@ -15,6 +15,7 @@ func phys_proc(delta) -> String:
 	player.handle_shooting()
 	player.handle_collecting()
 	player.handle_interaction()
+	player.handle_build_menu()
 	if player.is_in_water:
 		return "Sea"
 	return ""

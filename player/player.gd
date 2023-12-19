@@ -12,6 +12,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @onready var underwater_overlay: ShaderMaterial = $Camera3D/UnderwaterOverlay.get_active_material(0)
 @onready var input: PlayerInput = $Input as PlayerInput
 @onready var state_machine: StateMachine = $StateMachine as StateMachine
+@onready var ui_controller: UIController = $UI as UIController
 var seat: Seat
 var boat: Boat
 
@@ -20,7 +21,10 @@ var is_in_water = false
 var is_submergeed = false
 var is_sprinting = false
 var is_mounted = false
+var in_menu = false
 
+func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _physics_process(delta):
 	state_machine.phys_proc(delta)
@@ -42,6 +46,11 @@ func handle_gravity(delta):
 	velocity.y -= gravity * delta
 
 func handle_movement(delta, factor: float = 1.0, can_sprint: bool = true):
+	if in_menu:
+		velocity.x = 0.0
+		velocity.z = 0.0
+		return
+	
 	var input_dir = input.get_movement_vector()
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y))
 	
@@ -85,6 +94,14 @@ func handle_interaction():
 		if target is Seat:
 			target.mount(self)
 			on_mount(target)
+
+func handle_build_menu():
+	if input.get_build_menu():
+		in_menu = ui_controller.toggle_menu("Building")
+		if in_menu:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 #endregion
 
 

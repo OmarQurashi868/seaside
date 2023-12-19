@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://game/WaterArea.gd" id="5_fo7xh"]
 [ext_resource type="PackedScene" uid="uid://dw14hevxwji3e" path="res://resources/palm_tree.tscn" id="6_7x8cd"]
 [ext_resource type="AudioStream" uid="uid://c50wa0xv7x6b5" path="res://assets/audio/gentle-ocean-waves-birdsong-and-gull-7109.mp3" id="7_vc0qu"]
-[ext_resource type="PackedScene" uid="uid://cte6h68g2lc2n" path="res://boats/simple_boat.tscn" id="8_lq0w1"]
+[ext_resource type="PackedScene" uid="uid://cte6h68g2lc2n" path="res://boats/boat_list/simple_boat.tscn" id="8_lq0w1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_412dv"]
 sky_top_color = Color(0.168627, 0.45098, 0.772549, 1)

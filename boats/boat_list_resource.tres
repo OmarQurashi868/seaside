@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="BoatListResource" load_steps=2 format=3 uid="uid://bbaop207n1jdw"]
+
+[ext_resource type="Script" path="res://boats/boat_list_resource.gd" id="1_7cqpv"]
+
+[resource]
+script = ExtResource("1_7cqpv")

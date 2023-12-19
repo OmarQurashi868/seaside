@@ -179,18 +179,18 @@ vec3 water(vec2 uv, vec3 cdir, float iTime)
 }
 
 void vertex(){
-	//float time = my_time * wave_speed;
-	//vec2 uv = UV * wave_size;
-	//float d1 = mod(uv.x + uv.y, M_2PI);
-    //float d2 = mod((uv.x + uv.y + 0.25) * 1.3, M_6PI);
-    //d1 = time * 0.07 + d1;
-    //d2 = time * 0.5 + d2;
-    //vec2 dist = vec2(
-    	//sin(d1) * 0.15 + sin(d2) * 0.05,
-    	//cos(d1) * 0.15 + cos(d2) * 0.05
-    //);
-	//VERTEX.y = dist.y * height;
-	VERTEX.y = sin(my_time + UV.x) * 0.2;
+	float time = my_time * wave_speed;
+	vec2 uv = UV * wave_size;
+	float d1 = mod(uv.x + uv.y, M_2PI);
+    float d2 = mod((uv.x + uv.y + 0.25) * 1.3, M_6PI);
+    d1 = time * 0.07 + d1;
+    d2 = time * 0.5 + d2;
+    vec2 dist = vec2(
+    	sin(d1) * 0.15 + sin(d2) * 0.05,
+    	cos(d1) * 0.15 + cos(d2) * 0.05
+    );
+	VERTEX.y = dist.y * height;
+	//VERTEX.y = sin(my_time + UV.x) * 0.2;
 }
 
 void fragment()

@@ -3,9 +3,6 @@ class_name PlayerInput
 
 var mouse_relative: Vector2 = Vector2.ZERO
 
-func _ready():
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-
 func _process(_delta):
 	mouse_relative = Vector2.ZERO
 
@@ -35,3 +32,6 @@ func get_collect() -> bool:
 
 func get_interact() -> bool:
 	return Input.is_action_just_pressed("interact")
+
+func get_build_menu() -> bool:
+	return Input.is_action_just_pressed("build_menu")
