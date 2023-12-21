@@ -24,4 +24,3 @@ func on_player_exited_water():
 
 func debug_raycast(pos: Vector3):
 	$Pointer.global_position = pos
-	print('hi')

@@ -22,13 +22,16 @@ var is_submergeed = false
 var is_sprinting = false
 var is_mounted = false
 var in_menu = false
+var building_boat: Boat
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	Bus.boat_build_requested.connect(on_boat_build_requested)
 
 func _physics_process(delta):
 	state_machine.phys_proc(delta)
 	
+	handle_building()
 	# Check if camera is submerged
 	#World.get_water_level(Vector2(global_position.x, global_position.y))
 	if $Camera3D.global_position.y < World.sea_level and not is_submergeed:
@@ -71,6 +74,9 @@ func handle_looking():
 	rotation.x = clamp(rotation.x - look_dir.y, -1.5, 1.5)
 
 func handle_jumping():
+	if in_menu:
+		return
+	
 	if (is_on_floor() or is_in_water) and input.get_jump():
 		velocity.y = JUMP_VELOCITY
 
@@ -88,20 +94,38 @@ func handle_interaction():
 		return
 	
 	var target = shoot_ray()
+	if target.has("collider"):
+		target = target.collider
 	# TODO: Update UI indicator
 	
 	if input.get_interact():
-		if target is Seat:
+		if target is DriverSeat:
 			target.mount(self)
 			on_mount(target)
 
 func handle_build_menu():
-	if input.get_build_menu():
+	if input.get_build_menu() and not building_boat:
 		in_menu = ui_controller.toggle_menu("Building")
-		if in_menu:
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		else:
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+func handle_building():
+	if not building_boat:
+		return
+	
+	var target = shoot_ray(10, 0x8)
+	if target.has("position"):
+		building_boat.global_position = target.position
+		if target.collider.is_in_group("water"):
+			if input.get_shoot():
+				building_boat.get_node("CollisionShape3D").disabled = false
+				on_resource_spent(TeamData.resource_type.WOOD, building_boat.cost)
+				building_boat = null
+				ui_controller.update_buttons()
+	else:
+		building_boat.global_position = Vector3(0, -1000, 0)
+	
+	if input.get_collect():
+		building_boat.queue_free()
+		building_boat = null
 #endregion
 
 
@@ -139,10 +163,35 @@ func on_eject():
 
 func on_resource_collected(resource_type: TeamData.resource_type, amount: int = 1):
 	World.on_resource_collected(resource_type ,amount, team_id)
+	ui_controller.update_buttons()
 
+func on_resource_spent(resource_type: TeamData.resource_type, amount: int = 1) -> bool:
+	return World.on_resource_spent(resource_type ,amount, team_id)
+
+func can_afford(resource_type: TeamData.resource_type, amount: int = 1) -> bool:
+	return World.can_afford(resource_type, amount, team_id)
+
+
+func on_boat_build_requested(player: Player, boat_data):
+	if player != self:
+		return
+	
+	if not can_afford(TeamData.resource_type.WOOD, boat_data["cost"]):
+		return
+	
+	in_menu = ui_controller.toggle_menu("Building")
+	
+	var boat_scene_path = boat_data["path"]
+	building_boat = load(boat_scene_path).instantiate()
+	building_boat.cost = boat_data["cost"]
+	building_boat.get_node("CollisionShape3D").disabled = true
+	get_parent().add_child(building_boat)
+	building_boat.global_position = Vector3(0, -1000, 0)
 
 func try_collect():
 	var target = shoot_ray()
+	if target.has("collider"):
+		target = target.collider
 	if target:
 		Debug.update_entry("target", target.name)
 		if target.is_in_group("resource"):
@@ -150,14 +199,14 @@ func try_collect():
 	else:
 		Debug.update_entry("target", "")
 
-func shoot_ray(length: float = 2):
+func shoot_ray(length: float = 2, col_mask: int = 0xFFFFFFFF):
 	var space_state = get_world_3d().direct_space_state
 	var origin = $Camera3D.global_position
 	var target = $Camera3D.global_position + -transform.basis.z * length
 	var query = PhysicsRayQueryParameters3D.create(origin, target)
 	query.collide_with_areas = true
+	query.collision_mask = col_mask
 	var result = space_state.intersect_ray(query)
-	if result.has("collider"):
-		#Bus.debug_raycast_requested.emit(result.position)
-		return result.collider
-	return null
+	if result.has("position"):
+		Bus.debug_raycast_requested.emit(result.position)
+	return result

@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dw14hevxwji3e"]
 
 [ext_resource type="PackedScene" uid="uid://bv436qu62v1qw" path="res://assets/models/palm_tree.glb" id="1_1yytp"]
-[ext_resource type="Script" path="res://scripts/classes/resource_object.gd" id="2_40no8"]
+[ext_resource type="Script" path="res://resources/resource_object.gd" id="2_40no8"]
 [ext_resource type="PackedScene" uid="uid://crgdcivt0iadt" path="res://assets/models/palm_tree_stump.glb" id="3_ub2pb"]
 [ext_resource type="AudioStream" uid="uid://bann2uyvi1ica" path="res://assets/audio/woodcutter-84949.mp3" id="4_ed7bm"]
 [ext_resource type="AudioStream" uid="uid://duprnuw0ryvvt" path="res://assets/audio/timber-tree-falling-2-40385.mp3" id="5_jyi3d"]

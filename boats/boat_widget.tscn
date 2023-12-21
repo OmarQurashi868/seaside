@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://bsicn5xliq8gj"]
+[gd_scene load_steps=5 format=3 uid="uid://bsicn5xliq8gj"]
 
 [ext_resource type="Script" path="res://boats/boat_widget.gd" id="1_0ysfn"]
 [ext_resource type="Texture2D" uid="uid://yibjgnjdtqvb" path="res://boats/boat_list/simple_boat_img.png" id="2_xqbcr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uxksp"]
+bg_color = Color(0.360784, 0.709804, 0.247059, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ovmg5"]
+bg_color = Color(0.784314, 0.168627, 0.160784, 1)
 
 [node name="BoatWidget" type="PanelContainer"]
 size_flags_horizontal = 3
@@ -27,6 +33,8 @@ text = "COST: 30"
 
 [node name="Button" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_uxksp")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ovmg5")
 text = "BUILD"
 
 [connection signal="button_up" from="VBoxContainer/Button" to="." method="_on_button_button_up"]

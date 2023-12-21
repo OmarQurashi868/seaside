@@ -18,6 +18,17 @@ func on_resource_collected(resource_type: TeamData.resource_type, amount: int, t
 	teams[team_id].resources[resource_type] += amount
 	Debug.update_entry("wood", teams[0].resources[resource_type])
 
+func on_resource_spent(resource_type: TeamData.resource_type, amount: int, team_id: int) -> bool:
+	if teams[team_id].resources[resource_type] >= amount:
+		teams[team_id].resources[resource_type] -= amount
+		Debug.update_entry("wood", teams[0].resources[resource_type])
+		return true
+	else:
+		return false
+
+func can_afford(resource_type: TeamData.resource_type, amount: int, team_id: int) -> bool:
+	return teams[team_id].resources[resource_type] >= amount
+
 
 func get_water_level(pos: Vector2) -> float:
 	water_shader.set_shader_parameter("my_time", time)

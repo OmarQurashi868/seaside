@@ -12,6 +12,7 @@ var is_in_water = false
 var time = 0
 var force: float = 0.0
 var torque: float = 0.0
+var cost: int
 
 @onready var mesh = $Plane as MeshInstance3D
 @onready var offset = mesh.get_aabb().size.y / 2
