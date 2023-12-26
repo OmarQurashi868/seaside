@@ -1,9 +1,18 @@
-[gd_scene load_steps=7 format=3 uid="uid://cte6h68g2lc2n"]
+[gd_scene load_steps=9 format=3 uid="uid://cte6h68g2lc2n"]
 
 [ext_resource type="PackedScene" uid="uid://5noxxr6201g3" path="res://assets/models/simple_boat.glb" id="1_11vkx"]
 [ext_resource type="Script" path="res://boats/boat_list/simple_boat.gd" id="2_qntw0"]
+[ext_resource type="Shader" path="res://scripts/shaders/invalid_boat.gdshader" id="3_hmuts"]
 [ext_resource type="AudioStream" uid="uid://du3k5u878lucs" path="res://assets/audio/splash-by-blaukreuz-6261.mp3" id="3_mw6fx"]
 [ext_resource type="Script" path="res://boats/driver_seat.gd" id="4_obhn6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yq2os"]
+resource_local_to_scene = true
+render_priority = 1
+shader = ExtResource("3_hmuts")
+shader_parameter/target_color = Vector3(1, 0, 0)
+shader_parameter/target_alpha = 0.8
+shader_parameter/is_building = false
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_5qmpn"]
 points = PackedVector3Array(0.823213, 0.362389, -0.293366, 0.812576, 0.358382, 0.255781, 0.589528, -0.212917, 0.288752, 0.596942, -0.206996, -0.182324, 0.740214, 0.371043, -0.866768, -0.000161171, 0.529534, -1.98363, 0.662696, 0.367399, 1.71373, 0.73683, 0.34991, 1.27221, 0.533928, -0.225123, 1.14033, 0.453508, -0.388351, 0.262223, 0.462372, -0.381337, -0.118276, 0.524097, -0.199983, -0.680308, 0.33296, -0.191147, -1.16086, 0.495894, 0.391993, -1.43714, -0.000161171, 0.476795, -1.95938, -0.496055, 0.391993, -1.43714, -0.740537, 0.371043, -0.866768, -0.823213, 0.362389, -0.293366, -0.812737, 0.358382, 0.255781, -0.663018, 0.367399, 1.71373, -0.000161171, 0.375415, 1.88806, 0.624662, 0.301634, 1.73609, 0.65222, 0.341804, 1.72017, 0.581632, 0.122648, 1.71411, 0.477521, -0.229586, 1.59662, 0.656088, 0.125836, 1.24303, 0.37325, -0.398279, 1.42381, 0.40242, -0.401012, 1.0236, -0.000161171, -0.369223, -1.16692, 0.406933, -0.375599, -0.499154, 0.425627, -0.395091, 0.642722, 0.25399, -0.370225, -0.878517, -0.000161171, -0.192149, -1.52393, -0.000161171, 0.162544, -1.77936, -0.000161171, 0.339253, -1.89609, -0.333121, -0.191147, -1.16086, -0.524419, -0.199983, -0.680308, -0.597103, -0.206996, -0.182324, -0.58969, -0.212917, 0.288752, -0.736991, 0.34991, 1.27221, -0.534089, -0.225123, 1.14033, -0.581793, 0.122648, 1.71411, -0.652381, 0.341804, 1.72017, -0.624984, 0.301634, 1.73609, -0.000161171, 0.136038, 1.83917, -0.000161171, -0.214283, 1.68038, -0.000161171, -0.400921, 1.45867, -0.402581, -0.401012, 1.0236, -0.425788, -0.395091, 0.642722, -0.453831, -0.388351, 0.262223, -0.407094, -0.375599, -0.499154, -0.254152, -0.370225, -0.878517, -0.462533, -0.381337, -0.118276, -0.656249, 0.125836, 1.24303, -0.477682, -0.229586, 1.59662, -0.373411, -0.398279, 1.42381)
@@ -21,6 +30,9 @@ linear_damp = 0.9
 angular_damp = 0.9
 script = ExtResource("2_qntw0")
 seats = [NodePath("Driver")]
+
+[node name="Plane" parent="." index="0"]
+surface_material_override/0 = SubResource("ShaderMaterial_yq2os")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1"]
 shape = SubResource("ConvexPolygonShape3D_5qmpn")
@@ -41,3 +53,9 @@ shape = SubResource("SphereShape3D_axb7i")
 [node name="RemoteTransform3D" type="RemoteTransform3D" parent="Driver" index="1"]
 update_rotation = false
 update_scale = false
+
+[node name="BuildCollider" type="Area3D" parent="." index="4"]
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BuildCollider" index="0"]
+shape = SubResource("ConvexPolygonShape3D_5qmpn")

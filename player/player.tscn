@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b45upwuk7tjlb"]
+[gd_scene load_steps=18 format=3 uid="uid://b45upwuk7tjlb"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_xy2cs"]
 [ext_resource type="Script" path="res://player/input.gd" id="2_2hhbo"]
@@ -10,6 +10,8 @@
 [ext_resource type="Script" path="res://player/states/sea.gd" id="5_3b2gj"]
 [ext_resource type="Script" path="res://player/states/mounted.gd" id="6_vkw7s"]
 [ext_resource type="Script" path="res://ui/ui_handler.gd" id="8_t8fun"]
+[ext_resource type="AudioStream" uid="uid://dh10hqu5h5s63" path="res://assets/audio/wood-smash-3-170418.mp3" id="11_8kw37"]
+[ext_resource type="AudioStream" uid="uid://dfft8u6hpkxr" path="res://assets/audio/hammering-on-wood_1-2-106583.mp3" id="11_88qd3"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_g14t6"]
 
@@ -122,3 +124,12 @@ columns = 4
 [node name="WaterSplash" type="AudioStreamPlayer3D" parent="SFX"]
 stream = ExtResource("3_kg2eg")
 volume_db = -10.126
+
+[node name="BuildComplete" type="AudioStreamPlayer3D" parent="SFX"]
+stream = ExtResource("11_88qd3")
+volume_db = 19.854
+pitch_scale = 3.0
+
+[node name="BuildCancelled" type="AudioStreamPlayer3D" parent="SFX"]
+stream = ExtResource("11_8kw37")
+volume_db = -25.694

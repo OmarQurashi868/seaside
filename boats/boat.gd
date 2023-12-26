@@ -16,6 +16,7 @@ var cost: int
 
 @onready var mesh = $Plane as MeshInstance3D
 @onready var offset = mesh.get_aabb().size.y / 2
+@onready var build_collider = get_node("BuildCollider") as Area3D
 
 
 func _physics_process(delta):

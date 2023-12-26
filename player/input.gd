@@ -35,3 +35,9 @@ func get_interact() -> bool:
 
 func get_build_menu() -> bool:
 	return Input.is_action_just_pressed("build_menu")
+
+func get_zoom_in() -> bool:
+	return Input.is_action_just_pressed("zoom_in")
+
+func get_zoom_out() -> bool:
+	return Input.is_action_just_pressed("zoom_out")

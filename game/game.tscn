@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cpxlibev8gjnk"]
+[gd_scene load_steps=16 format=3 uid="uid://cpxlibev8gjnk"]
 
 [ext_resource type="Script" path="res://game/game.gd" id="1_krvvd"]
 [ext_resource type="PackedScene" uid="uid://cbta1asymkv8h" path="res://assets/models/test_island.glb" id="2_k51ge"]
@@ -7,7 +7,6 @@
 [ext_resource type="Script" path="res://game/WaterArea.gd" id="5_fo7xh"]
 [ext_resource type="PackedScene" uid="uid://dw14hevxwji3e" path="res://resources/palm_tree.tscn" id="6_7x8cd"]
 [ext_resource type="AudioStream" uid="uid://c50wa0xv7x6b5" path="res://assets/audio/gentle-ocean-waves-birdsong-and-gull-7109.mp3" id="7_vc0qu"]
-[ext_resource type="PackedScene" uid="uid://cte6h68g2lc2n" path="res://boats/boat_list/simple_boat.tscn" id="8_lq0w1"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_412dv"]
 sky_top_color = Color(0.168627, 0.45098, 0.772549, 1)
@@ -114,9 +113,6 @@ transform = Transform3D(0.3, 0, 0, 0, 0.299236, 0.021397, 0, -0.021397, 0.299236
 stream = ExtResource("7_vc0qu")
 volume_db = -7.518
 autoplay = true
-
-[node name="SimpleBoat" parent="." instance=ExtResource("8_lq0w1")]
-transform = Transform3D(0.608069, 0, -0.793884, 0, 1, 0, 0.793884, 0, 0.608069, -2.3953, 0.331726, -7.26142)
 
 [node name="Pointer" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.06335, 0)

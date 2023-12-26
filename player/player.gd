@@ -111,21 +111,42 @@ func handle_building():
 	if not building_boat:
 		return
 	
+	if input.get_zoom_in():
+		building_boat.rotate_y(0.2)
+	if input.get_zoom_out():
+		building_boat.rotate_y(-0.2)
+	
+	if input.get_collect():
+		# Cancel build
+		building_boat.queue_free()
+		building_boat = null
+		$SFX/BuildCancelled.play()
+		return
+	
+	var mesh = building_boat.get_node("Plane") as MeshInstance3D
+	mesh.get_surface_override_material(0).set_shader_parameter("is_building", true)
 	var target = shoot_ray(10, 0x8)
 	if target.has("position"):
 		building_boat.global_position = target.position
-		if target.collider.is_in_group("water"):
-			if input.get_shoot():
-				building_boat.get_node("CollisionShape3D").disabled = false
-				on_resource_spent(TeamData.resource_type.WOOD, building_boat.cost)
-				building_boat = null
-				ui_controller.update_buttons()
+		var overlaps = building_boat.build_collider.get_overlapping_bodies()
+		if overlaps.size() > 0 or not target.collider.is_in_group("water"):
+			# Invalid shader toggle
+			mesh.get_surface_override_material(0).set_shader_parameter("target_color", Vector3(1,0,0))
+			return
+		# Valid shader toggle
+		mesh.get_surface_override_material(0).set_shader_parameter("target_color", Vector3(0,1,0))
+		if input.get_shoot():
+			# Build
+			building_boat.get_node("CollisionShape3D").disabled = false
+			on_resource_spent(TeamData.resource_type.WOOD, building_boat.cost)
+			mesh.get_surface_override_material(0).set_shader_parameter("is_building", false)
+			building_boat = null
+			ui_controller.update_buttons()
+			mesh.set_surface_override_material(0, null)
+			$SFX/BuildComplete.play()
 	else:
+		# Invalid shader toggle
 		building_boat.global_position = Vector3(0, -1000, 0)
-	
-	if input.get_collect():
-		building_boat.queue_free()
-		building_boat = null
 #endregion
 
 
